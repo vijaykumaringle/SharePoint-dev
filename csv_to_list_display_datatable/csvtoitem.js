@@ -1,3 +1,6 @@
+var libname = "Shared Documents";
+var listname = "csvitemlist";
+var tenantname = "https://abcd.sharepoint.com";
 var csvurl;
 var lines = [];
 
@@ -21,7 +24,7 @@ function calltocsvlibrary(){
     $.ajax({  
   
         async: false,  
-        url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/GetFolderByServerRelativeUrl('Shared Documents')/Files",
+        url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/GetFolderByServerRelativeUrl('"+libname+"')/Files",
         method: "GET",  
   
         headers: {  
@@ -54,7 +57,7 @@ function readcsv(){
     $.ajax({
         async: false, 
         type: "GET",
-        url: "https://abcd.sharepoint.com"+csvurl,
+        url: tenantname+csvurl,
         dataType: "text",
         success: function(data) {processData(data);},
         error: function(error) {  
@@ -95,7 +98,7 @@ function itemcreate(){
 
         $.ajax({
             async: false,
-            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/GetByTitle('csvitemlist')/items",
+            url: _spPageContextInfo.webAbsoluteUrl + "/_api/web/lists/GetByTitle('"+listname+"')/items",
             type: "POST",
             data: JSON.stringify({
                 __metadata:
@@ -131,7 +134,7 @@ function itemcreate(){
 //call to data table using GET rest
 function getdatatabledata(){
     var siteUrl = _spPageContextInfo.webAbsoluteUrl;    
-    var oDataUrl = siteUrl + "/_api/web/lists/getbytitle('csvitemlist')/items";
+    var oDataUrl = siteUrl + "/_api/web/lists/getbytitle('"+listname+"')/items";
     
     $.ajax({
         async: false, 
